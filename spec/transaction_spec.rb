@@ -5,6 +5,10 @@ describe Transaction do
   let(:account1) { instance_double(Account) }
   let(:subject) { described_class.new(account: account1, date: '01/01/2021') }
 
+  before do
+    allow(account1).to receive(:instance_of?).with(Account).and_return(true)
+  end
+
   context '#initialize' do
     it 'should require account and date arguments to initialize' do
       expect{ Transaction.new }.to raise_error ArgumentError
@@ -13,6 +17,10 @@ describe Transaction do
 
     it 'should have an amount argument which starts at 0' do
       expect(subject.amount).to eq(0)
+    end
+
+    it 'should raise an error if account is not valid' do
+      expect{ Transaction.new(account: 1, date: '01/01/2021') }.to raise_error 'Not a valid account'
     end
   end
 
