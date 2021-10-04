@@ -6,6 +6,5 @@ class Account
   end
 
   def balance(date:)
-    @transactions
   end
 end
