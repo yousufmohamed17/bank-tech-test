@@ -6,5 +6,9 @@ class Account
   end
 
   def balance(date:)
+    @transactions.sum { |h| h[:amount] }
+  end
+
+  def add_transaction(transaction)
   end
 end

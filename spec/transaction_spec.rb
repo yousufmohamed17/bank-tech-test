@@ -7,6 +7,7 @@ describe Transaction do
 
   before do
     allow(account1).to receive(:instance_of?).with(Account).and_return(true)
+    allow(account1).to receive(:add_transaction)
     allow(Time).to receive_message_chain(:now, :strftime).and_return('01/01/2021')
   end
 
@@ -17,6 +18,10 @@ describe Transaction do
 
     it 'should raise an error if account is not valid' do
       expect{ Transaction.new(account: 1) }.to raise_error 'Not a valid account'
+    end
+
+    it 'should raise an error if account is not valid' do
+      expect{ Transaction.new(account: account1) }.not_to raise_error
     end
 
     it 'should initialize with date attribute' do
@@ -41,6 +46,11 @@ describe Transaction do
     it 'should raise an error if the deposit amount is not positive' do
       expect{ subject.deposit(amount: -500) }.to raise_error 'Requested amount must be positive'
     end
+
+    it 'should #add_transaction to account' do
+      expect(account1).to receive(:add_transaction)
+      subject.deposit(amount: 500)
+    end
   end
 
   context '#withdraw' do
@@ -58,7 +68,13 @@ describe Transaction do
     end
 
     xit 'should raise an error if the withdrawal amount is greater than the available balance' do
-      expect{ subject.withdraw(amount: -500) }.to raise_error 'Insufficient balance'
+      expect{ subject.withdraw(amount: 500) }.to raise_error 'Insufficient balance'
+    end
+
+    it 'should #add_transaction to account' do
+      subject.deposit(amount: 500)
+      expect(account1).to receive(:add_transaction)
+      subject.withdraw(amount: 500)
     end
   end
 end
