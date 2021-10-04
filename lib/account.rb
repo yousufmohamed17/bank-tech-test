@@ -4,4 +4,8 @@ class Account
   def initialize
     @transactions = []
   end
+
+  def balance(date:)
+    @transactions
+  end
 end
