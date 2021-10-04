@@ -34,8 +34,12 @@ describe Transaction do
       # expect{ subject.deposit(amount: 0) }.not_to raise_error
     end
 
-    it 'should raise an error if the date is not valid' do
-      
+    it 'should raise an error if the deposit amount is not a number' do
+      expect{ subject.deposit(amount: 'test') }.to raise_error 'Deposit amount must be a number'
+    end
+
+    it 'should raise an error if the deposit amount is not positive' do
+      expect{ subject.deposit(amount: -500) }.to raise_error 'Deposit amount must be positive'
     end
   end
 end

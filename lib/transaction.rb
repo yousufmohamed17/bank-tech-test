@@ -7,11 +7,17 @@ class Transaction
   end
 
   def deposit(amount:)
+    amount_valid?(amount)
   end
 
   private
 
   def account_valid?(account)
     raise 'Not a valid account' unless account.instance_of?(Account)
+  end
+
+  def amount_valid?(amount)
+    raise 'Deposit amount must be a number' unless amount.is_a?(Integer) || amount.is_a?(Float)
+    raise 'Deposit amount must be positive' if amount <= 0
   end
 end
