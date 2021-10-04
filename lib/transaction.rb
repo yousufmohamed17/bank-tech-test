@@ -1,8 +1,8 @@
 class Transaction
-  attr_reader :amount
-  def initialize(account:, date:)
+  attr_reader :date, :amount
+  def initialize(account:)
     @account = account if account_valid?(account)
-    @date = date
+    @date = Time.now.strftime('%d/%m/%Y')
     @amount = 0
   end
 

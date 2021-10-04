@@ -8,7 +8,7 @@ describe Account do
   context '#balance' do
     it 'should require date argument' do
       expect{ subject.balance }.to raise_error ArgumentError
-      expect{ subject.balance(date: '01-01-2021') }.not_to raise_error
+      expect{ subject.balance(date: '01/01/2021') }.not_to raise_error
     end
   end
 end
