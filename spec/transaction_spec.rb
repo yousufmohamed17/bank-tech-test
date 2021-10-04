@@ -24,10 +24,6 @@ describe Transaction do
     it 'should initialize with date attribute' do
       expect(subject.date).to eq('01/01/2021')
     end
-
-    it 'should initialize with an amount attribute which starts at 0' do
-      expect(subject.amount).to eq(0)
-    end
   end
 
   context '#deposit' do

@@ -4,20 +4,17 @@ class Transaction
     validate_account(account)
     @account = account
     @date = Time.now.strftime('%d/%m/%Y')
-    @amount = 0
   end
 
   def deposit(amount:)
     validate_amount(amount)
-    @amount += amount
-    @account.add_transaction({ amount: @amount, date: @date })
+    @account.add_transaction({ amount: amount, date: @date })
   end
 
   def withdraw(amount:)
     validate_amount(amount)
     check_balance(amount)
-    @amount -= amount
-    @account.add_transaction({ amount: @amount, date: @date })
+    @account.add_transaction({ amount: -amount, date: @date })
   end
 
   private

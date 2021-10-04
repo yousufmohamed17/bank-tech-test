@@ -1,3 +1,5 @@
+require 'date'
+
 class Account
   def initialize
     @transactions = []
@@ -8,7 +10,8 @@ class Account
   end
 
   def balance(date:)
-    @transactions.select { |h| h[:date] <= date }.sum { |h| h[:amount] }
+    @transactions.select { |h| Date.parse(h[:date]) <= Date.parse(date) }.sum { |h| h[:amount] }
+    # does this work without parsing?
   end
 
   def add_transaction(transaction)
