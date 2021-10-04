@@ -4,6 +4,6 @@ class Transaction
     @date = date
   end
 
-  def deposit(amount:, date:)
+  def deposit(amount:)
   end
 end
