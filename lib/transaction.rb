@@ -1,33 +1,36 @@
 class Transaction
-  attr_reader :account, :date, :amount
+  attr_reader :date, :amount
   def initialize(account:)
-    @account = account if account_valid?(account)
+    validate_account(account)
+    @account = account
     @date = Time.now.strftime('%d/%m/%Y')
     @amount = 0
   end
 
   def deposit(amount:)
-    @amount += amount if amount_valid?(amount)
+    validate_amount(amount)
+    @amount += amount
     @account.add_transaction({ amount: @amount, date: @date })
   end
 
   def withdraw(amount:)
-    @amount -= amount if amount_valid?(amount) && sufficient_balance?(amount)
+    validate_amount(amount)
+    check_balance(amount)
+    @amount -= amount
     @account.add_transaction({ amount: @amount, date: @date })
   end
 
   private
 
-  def account_valid?(account)
-    account.instance_of?(Account) ? true : (raise 'Not a valid account')
+  def validate_account(account)
+    raise 'Not a valid account' unless account.instance_of?(Account)
   end
 
-  def amount_valid?(amount)
-    raise 'Requested amount must be a number' unless amount.is_a?(Integer) || amount.is_a?(Float)
-    raise 'Requested amount must be positive' if amount <= 0
+  def validate_amount(amount)
+    raise 'Amount must be a positive number' unless (amount.is_a?(Integer) || amount.is_a?(Float)) && amount > 0
   end
 
-  def sufficient_balance?(amount)
+  def check_balance(amount)
     raise 'Insufficient balance' if amount > @account.balance(date: @date)
   end
 end

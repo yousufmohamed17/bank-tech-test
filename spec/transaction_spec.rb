@@ -6,9 +6,10 @@ describe Transaction do
   let(:subject) { described_class.new(account: account1) }
 
   before do
+    allow(Time).to receive_message_chain(:now, :strftime).and_return('01/01/2021')
     allow(account1).to receive(:instance_of?).with(Account).and_return(true)
     allow(account1).to receive(:add_transaction)
-    allow(Time).to receive_message_chain(:now, :strftime).and_return('01/01/2021')
+    allow(account1).to receive(:balance).with(date: subject.date).and_return(100)
   end
 
   context '#initialize' do
@@ -16,12 +17,8 @@ describe Transaction do
       expect{ Transaction.new }.to raise_error ArgumentError
     end
 
-    it 'should raise an error if account is not valid' do
+    it 'should raise an error if an account is not valid' do
       expect{ Transaction.new(account: 1) }.to raise_error 'Not a valid account'
-    end
-
-    it 'should raise an error if account is not valid' do
-      expect{ Transaction.new(account: account1) }.not_to raise_error
     end
 
     it 'should initialize with date attribute' do
@@ -36,19 +33,18 @@ describe Transaction do
   context '#deposit' do
     it 'should require an amount argument' do
       expect{ subject.deposit }.to raise_error ArgumentError
-      # expect{ subject.deposit(amount: 0) }.not_to raise_error
     end
 
     it 'should raise an error if the deposit amount is not a number' do
-      expect{ subject.deposit(amount: 'test') }.to raise_error 'Requested amount must be a number'
+      expect{ subject.deposit(amount: 'test') }.to raise_error 'Amount must be a positive number'
     end
 
     it 'should raise an error if the deposit amount is not positive' do
-      expect{ subject.deposit(amount: -500) }.to raise_error 'Requested amount must be positive'
+      expect{ subject.deposit(amount: -500) }.to raise_error 'Amount must be a positive number'
     end
 
     it 'should #add_transaction to account' do
-      expect(account1).to receive(:add_transaction)
+      expect(account1).to receive(:add_transaction).with({ amount: 500, date: subject.date })
       subject.deposit(amount: 500)
     end
   end
@@ -56,25 +52,23 @@ describe Transaction do
   context '#withdraw' do
     it 'should require an amount argument' do
       expect{ subject.withdraw }.to raise_error ArgumentError
-      # expect{ subject.deposit(amount: 0) }.not_to raise_error
     end
 
     it 'should raise an error if the withdrawal amount is not a number' do
-      expect{ subject.withdraw(amount: 'test') }.to raise_error 'Requested amount must be a number'
+      expect{ subject.withdraw(amount: 'test') }.to raise_error 'Amount must be a positive number'
     end
 
     it 'should raise an error if the withdrawal amount is not positive' do
-      expect{ subject.withdraw(amount: -500) }.to raise_error 'Requested amount must be positive'
+      expect{ subject.withdraw(amount: -500) }.to raise_error 'Amount must be a positive number'
     end
 
-    xit 'should raise an error if the withdrawal amount is greater than the available balance' do
+    it 'should raise an error if the withdrawal amount is greater than the available balance' do
       expect{ subject.withdraw(amount: 500) }.to raise_error 'Insufficient balance'
     end
 
     it 'should #add_transaction to account' do
-      subject.deposit(amount: 500)
-      expect(account1).to receive(:add_transaction)
-      subject.withdraw(amount: 500)
+      expect(account1).to receive(:add_transaction).with({ amount: -100, date: subject.date })
+      subject.withdraw(amount: 100)
     end
   end
 end
