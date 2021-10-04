@@ -7,7 +7,11 @@ class Transaction
   end
 
   def deposit(amount:)
-    amount_valid?(amount)
+    @amount += amount if amount_valid?(amount)
+  end
+
+  def withdraw(amount:)
+    @amount -= amount if amount_valid?(amount) && sufficient_balance?(amount)
   end
 
   private
@@ -17,7 +21,11 @@ class Transaction
   end
 
   def amount_valid?(amount)
-    raise 'Deposit amount must be a number' unless amount.is_a?(Integer) || amount.is_a?(Float)
-    raise 'Deposit amount must be positive' if amount <= 0
+    raise 'Requested amount must be a number' unless amount.is_a?(Integer) || amount.is_a?(Float)
+    raise 'Requested amount must be positive' if amount <= 0
+  end
+
+  def sufficient_balance?(amount)
+    raise 'Insufficient balance' if amount > @account.balance
   end
 end

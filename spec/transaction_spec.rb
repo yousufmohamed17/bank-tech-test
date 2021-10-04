@@ -35,11 +35,30 @@ describe Transaction do
     end
 
     it 'should raise an error if the deposit amount is not a number' do
-      expect{ subject.deposit(amount: 'test') }.to raise_error 'Deposit amount must be a number'
+      expect{ subject.deposit(amount: 'test') }.to raise_error 'Requested amount must be a number'
     end
 
     it 'should raise an error if the deposit amount is not positive' do
-      expect{ subject.deposit(amount: -500) }.to raise_error 'Deposit amount must be positive'
+      expect{ subject.deposit(amount: -500) }.to raise_error 'Requested amount must be positive'
+    end
+  end
+
+  context '#withdraw' do
+    it 'should require an amount argument' do
+      expect{ subject.withdraw }.to raise_error ArgumentError
+      # expect{ subject.deposit(amount: 0) }.not_to raise_error
+    end
+
+    it 'should raise an error if the withdrawal amount is not a number' do
+      expect{ subject.withdraw(amount: 'test') }.to raise_error 'Requested amount must be a number'
+    end
+
+    it 'should raise an error if the withdrawal amount is not positive' do
+      expect{ subject.withdraw(amount: -500) }.to raise_error 'Requested amount must be positive'
+    end
+
+    xit 'should raise an error if the withdrawal amount is greater than the available balance' do
+      expect{ subject.withdraw(amount: -500) }.to raise_error 'Insufficient balance'
     end
   end
 end
