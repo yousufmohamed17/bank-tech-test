@@ -1,14 +1,17 @@
 class Account
-  attr_reader :transactions
-
   def initialize
     @transactions = []
   end
 
+  def get_transactions
+    @transactions
+  end
+
   def balance(date:)
-    @transactions.sum { |h| h[:amount] }
+    @transactions.select { |h| h[:date] <= date }.sum { |h| h[:amount] }
   end
 
   def add_transaction(transaction)
+    @transactions << transaction
   end
 end
