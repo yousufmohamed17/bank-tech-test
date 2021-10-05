@@ -10,20 +10,21 @@ class Statement
     @transactions.reverse.each {
       |t| print_body([t.date, t.credit, t.debit, t.balance])
     }
+    nil
   end
 
   private
 
   def print_header
-    format(['date', 'credit', 'debit', 'balance'])
+    puts format(['date', 'credit', 'debit', 'balance'])
   end
 
   def print_body(array)
-    format(array)
+    puts format(array)
   end
 
   def format(array)
-    puts array.map { |ele| decimal(ele).center(13) }.join("||")
+    array.map { |ele| decimal(ele).center(13) }.join("||")
   end
 
   def decimal(ele)

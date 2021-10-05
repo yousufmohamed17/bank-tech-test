@@ -1,4 +1,57 @@
-# Specification
+# Bank Tech Test
+
+This is a command line application written in Ruby that delivers the basic functionality of a bank account. A user can make an account, make deposits and withdrawals, and see their account statement. 
+
+This program was written using a test-driven development approach for a Makers Academy tech test. The specification for the test can be seen below.
+
+## Prerequisites
+
+* You have installed Ruby
+
+## How to install
+
+1. Clone this repository to your local machine
+2. Run the command `gem install bundler` (if you don't have bundler already)
+3. When the installation completes, run `bundle`
+
+## How to use this program
+
+1. Open a Ruby REPL (e.g IRB) via the command line and load account.rb
+````
+irb
+require './lib/account.rb'
+```` 
+2. To create a new bank account:
+````
+account = Account.new
+```` 
+3. To make a deposit:
+````
+account.deposit(amount: 10)
+````
+
+4. To make a withdrawal:
+````
+account.withdraw(amount: 10)
+````
+
+5. To view your account statement:
+````
+account.print_statement
+````
+
+Here is an example of the working application:
+
+![Working application](./example.png)
+
+## How to run the tests
+
+Run the following command from your command line whilst in the project directory:
+````
+rspec
+````
+
+## Specification
 
 ### Requirements
 

@@ -1,4 +1,7 @@
 class Account
+  require_relative './transaction.rb'
+  require_relative './statement.rb'
+  
   attr_reader :transactions, :balance
 
   def initialize
