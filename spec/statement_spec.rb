@@ -11,7 +11,7 @@ describe Statement do
 
   context '#initialize' do
     it 'should require transactions argument to initialize' do
-      expect{ Statement.new }.to raise_error ArgumentError
+      expect { Statement.new }.to raise_error ArgumentError
     end
 
     it 'should initialize with transactions attribute equal to transactions argument' do

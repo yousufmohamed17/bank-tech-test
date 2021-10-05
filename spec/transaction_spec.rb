@@ -9,7 +9,7 @@ describe Transaction do
 
   context '#initialize' do
     it 'should require balance argument to initialize' do
-      expect{ Transaction.new }.to raise_error ArgumentError
+      expect { Transaction.new }.to raise_error ArgumentError
     end
 
     it 'should initialize with date attribute' do
@@ -31,15 +31,15 @@ describe Transaction do
 
   context '#deposit' do
     it 'should require an amount argument' do
-      expect{ subject.deposit }.to raise_error ArgumentError
+      expect { subject.deposit }.to raise_error ArgumentError
     end
 
     it 'should raise an error if the deposit amount is not an integer' do
-      expect{ subject.deposit('test') }.to raise_error 'Amount must be a positive integer'
+      expect { subject.deposit('test') }.to raise_error 'Amount must be a positive integer'
     end
 
     it 'should raise an error if the deposit amount is not positive' do
-      expect{ subject.deposit(-500) }.to raise_error 'Amount must be a positive integer'
+      expect { subject.deposit(-500) }.to raise_error 'Amount must be a positive integer'
     end
 
     it 'should add the deposit amount to credit attribute' do
@@ -57,19 +57,19 @@ describe Transaction do
 
   context '#withdraw' do
     it 'should require an amount argument' do
-      expect{ subject.withdraw }.to raise_error ArgumentError
+      expect { subject.withdraw }.to raise_error ArgumentError
     end
 
     it 'should raise an error if the withdrawal amount is not a integer' do
-      expect{ subject.withdraw('test') }.to raise_error 'Amount must be a positive integer'
+      expect { subject.withdraw('test') }.to raise_error 'Amount must be a positive integer'
     end
 
     it 'should raise an error if the withdrawal amount is not positive' do
-      expect{ subject.withdraw(-500) }.to raise_error 'Amount must be a positive integer'
+      expect { subject.withdraw(-500) }.to raise_error 'Amount must be a positive integer'
     end
 
     it 'should raise an error if the withdrawal amount is greater than the available balance' do
-      expect{ subject.withdraw(1000) }.to raise_error 'Insufficient balance'
+      expect { subject.withdraw(1000) }.to raise_error 'Insufficient balance'
     end
 
     it 'should add the withdrawal amount to the debit attribute' do

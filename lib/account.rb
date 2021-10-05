@@ -1,17 +1,9 @@
-# require 'date'
-
 class Account
+  attr_reader :transactions, :balance
+
   def initialize
     @transactions = []
     @balance = 0
-  end
-
-  def get_transactions
-    @transactions
-  end
-
-  def current_balance
-    @balance
   end
 
   def deposit(amount:)
@@ -27,14 +19,4 @@ class Account
   def print_statement
     Statement.new(@transactions).print_statement
   end
-
-
-  # def balance(date:)
-  #   @transactions.select { |h| Date.parse(h[:date]) <= Date.parse(date) }.sum { |h| h[:amount] }
-  #   # does this work without parsing?
-  # end
-
-  # def add_transaction(transaction)
-  #   @transactions << transaction
-  # end
 end
