@@ -1,19 +1,32 @@
 class Statement
-  def initialize(account:)
-    validate_account(account)
-    @account = account
+  attr_reader :transactions
+  
+  def initialize(transactions)
+    @transactions = transactions
   end
 
   def print_statement
-    puts 'date || credit || debit || balance'
-    @account.get_transactions.reverse.each do
-      |h| puts "#{h[:date]} || #{h[:amount] if h[:amount] > 0}|| #{-h[:amount] if h[:amount] < 0}|| #{@account.balance(date: h[:date])}"
-    end 
+    print_header
+    @transactions.reverse.each {
+      |t| print_body([t.date, t.credit, t.debit, t.balance])
+    }
   end
 
   private
 
-  def validate_account(account)
-    raise 'Not a valid account' unless account.instance_of?(Account)
+  def print_header
+    format(['date', 'credit', 'debit', 'balance'])
+  end
+
+  def print_body(array)
+    format(array)
+  end
+
+  def format(array)
+    puts array.map { |ele| decimal(ele).center(13) }.join("||")
+  end
+
+  def decimal(ele)
+    ele.is_a?(Integer) ? ele.to_s + ".00" : ele
   end
 end
