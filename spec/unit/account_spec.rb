@@ -1,4 +1,4 @@
-require_relative '../lib/account.rb'
+require_relative '../../lib/account.rb'
 
 describe Account do
   let(:transaction_class) { class_double(Transaction).as_stubbed_const }

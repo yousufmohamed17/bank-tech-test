@@ -1,4 +1,4 @@
-require_relative '../lib/statement.rb'
+require_relative '../../lib/statement.rb'
 
 describe Statement do
   let(:subject) { described_class.new(transactions) }
@@ -25,7 +25,11 @@ describe Statement do
     end
 
     it 'should print the transactions in reverse order with correct format' do
-      expect { subject.print_statement }.to output(header + deposit_array + withdrawal_array).to_stdout
+      expect { subject.print_statement }.to output(
+        header + 
+        " 01/01/2021  ||             ||    30.00    ||    70.00    \n" \
+        " 01/01/2021  ||   100.00    ||             ||   100.00    \n" \
+      ).to_stdout
     end
   end
 end

@@ -1,4 +1,4 @@
-require_relative '../lib/transaction.rb'
+require_relative '../../lib/transaction.rb'
 
 describe Transaction do
   let(:subject) { described_class.new(500) }

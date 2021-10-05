@@ -26,7 +26,8 @@ class Transaction
   private
 
   def validate_amount(amount)
-    raise 'Amount must be a positive integer' unless amount.is_a?(Integer) && amount.positive?
+    message = 'Amount must be a positive integer'
+    raise message unless amount.is_a?(Integer) && amount.positive?
   end
 
   def check_balance(amount)
